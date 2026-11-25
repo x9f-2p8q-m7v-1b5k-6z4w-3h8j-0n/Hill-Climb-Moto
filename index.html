@@ -212,7 +212,6 @@ if(!Array.isArray(SV.best))SV.best=[];if(!Array.isArray(SV.own))SV.own=[1];if(!A
 while(SV.best.length<BI.length)SV.best.push(0);while(SV.own.length<VEH.length)SV.own.push(0);
 if(SV.mver!==3){SV.mver=3;SV.best=[];SV.map=0;SV.mo=[1]}if(!Array.isArray(SV.mo))SV.mo=[1];while(SV.best.length<BI.length)SV.best.push(0);while(SV.mo.length<BI.length)SV.mo.push(0);if(!BI[SV.map]||!SV.mo[SV.map])SV.map=0;
 if(!VEH[SV.veh]||!SV.own[SV.veh])SV.veh=0;if(!BI[SV.map])SV.map=0;
-if(!SV.gift){SV.gift=1;SV.coins=Math.max(SV.coins||0,999999999);save()} // one-time grant: enough to unlock everything; balance is kept in localStorage (hcm3) like normal
 // ---------- terrain ----------
 const hash=n=>{const s=Math.sin(n*127.1+311.7)*43758.5453;return s-Math.floor(s)};
 const nz=x=>{const i=Math.floor(x),f=x-i,u=f*f*(3-2*f);return(hash(i)+(hash(i+1)-hash(i))*u)*2-1};
