@@ -88,7 +88,7 @@ body.inmenu .hint,body.inmenu #pedals{display:none!important}
  <div class="r"><div class="chip"><small>BEST</small><span id="bs">0 m</span></div><button id="pz">Ⅱ</button></div>
 </div></div>
 <div id="toast"></div>
-<div class="hint">→/D gas · ←/A brake · gas lifts the front, brake tips you forward · in the air gas = tilt back · P pause · R restart</div>
+<div class="hint">→/D gas · ←/A brake (hold when stopped to reverse) · gas lifts the front, brake tips you forward · in the air gas = tilt back · P pause · R restart</div>
 <div id="pedals"><button class="pd" id="pb">BRAKE</button><button class="pd g" id="pg">GAS</button></div>
 <div id="ov"><div class="pn" id="pn"></div></div>
 <script>
@@ -212,6 +212,7 @@ if(!Array.isArray(SV.best))SV.best=[];if(!Array.isArray(SV.own))SV.own=[1];if(!A
 while(SV.best.length<BI.length)SV.best.push(0);while(SV.own.length<VEH.length)SV.own.push(0);
 if(SV.mver!==3){SV.mver=3;SV.best=[];SV.map=0;SV.mo=[1]}if(!Array.isArray(SV.mo))SV.mo=[1];while(SV.best.length<BI.length)SV.best.push(0);while(SV.mo.length<BI.length)SV.mo.push(0);if(!BI[SV.map]||!SV.mo[SV.map])SV.map=0;
 if(!VEH[SV.veh]||!SV.own[SV.veh])SV.veh=0;if(!BI[SV.map])SV.map=0;
+if(!SV.gift){SV.gift=1;SV.coins=Math.max(SV.coins||0,999999999);save()} // one-time grant: enough to unlock everything; balance is kept in localStorage (hcm3) like normal
 // ---------- terrain ----------
 const hash=n=>{const s=Math.sin(n*127.1+311.7)*43758.5453;return s-Math.floor(s)};
 const nz=x=>{const i=Math.floor(x),f=x-i,u=f*f*(3-2*f);return(hash(i)+(hash(i+1)-hash(i))*u)*2-1};
@@ -260,7 +261,7 @@ function step(hh){
  const al=V.al*(1+.13*ENG),wmax=V.wm*(1+.06*ENG)*(1-.025*DNF);
  for(const w of Wh){
   if(cg&&fuel>0&&w.ww<wmax)w.ww+=al*hh;
-  if(cb)w.ww=w.ww>0?Math.max(0,w.ww-170*(1+.12*BRK)*hh):Math.max(-10,w.ww-35*hh);
+  if(cb){if(w.ww>0)w.ww=Math.max(0,w.ww-170*(1+.12*BRK)*hh);else if(fuel>0&&!cg){const rm=-Math.max(12,wmax*.45);w.ww=Math.max(rm,w.ww-al*.75*hh)}else w.ww=Math.min(0,w.ww+60*hh)} // brake slows you to a stop, keep holding it to reverse
   else if(!cg)w.ww-=w.ww*.15*hh;
   const R=w.r||V.R;w.x+=w.vx*hh;w.y+=w.vy*hh;w.ang+=w.ww*hh;w.gr=0;
   let bd=1e9,bx=0;
